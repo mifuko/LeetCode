@@ -34,7 +34,7 @@ class Solution_BT:
 # 时间复杂度：卡特兰数（Catalan number）的复杂度，因为每个有效序列的长度为 
 # 空间复杂度：O(n)，递归栈的最大深度为 2n
 
-class Solution:
+class Solution_BFS:
      # BFS（Backtracking）
      # 通过队列逐层生成所有可能的括号组合，每一步添加左括号或右括号，并检查其有效性。
 
@@ -63,3 +63,32 @@ class Solution:
                 queue.append((s + ")", left, right + 1))
         
         return result
+
+
+class Solution:
+     # 贪心构造法
+     # 核心观察：每个有效括号组合的前缀中，左括号数量必须 始终不少于 右括号数量。
+     # 贪心策略：优先添加左括号，直到无法添加（数量达到 n）。必须添加右括号时，确保剩余右括号数量足够补全（即 剩余右括号数 = n - 当前右括号数 > 0）。
+
+    def generateParenthesis(self, n: int) -> List[str]:  # 添加self参数
+        result = []
+        
+        def backtrack(path: str, left: int, right: int):  
+            # backtrack 是 generateParenthesis 内部的辅助函数，属于generateParenthesis方法
+            # 当前已生成的括号字符串（如 "(()"）
+            if len(path) == 2 * n:
+                result.append(path)
+                return
+            # 当 path 的长度达到 2n 时（例如 n=3 时长度为 6），说明已生成完整的括号组合。
+            # 将 path 添加到 result 中，并通过 return 回溯到上一层递归。
+
+            if left < n:
+                backtrack(path + "(", left + 1, right)
+            # right 不变：右括号数量未增加。
+
+            if right < left:
+                backtrack(path + ")", left, right + 1)
+        
+        backtrack("", 0, 0)  
+        # 调用backtrack函数启动递归,初始状态
+        return result # return result 属于 generateParenthesis 方法
