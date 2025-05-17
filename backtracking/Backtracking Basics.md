@@ -1,6 +1,3 @@
-Here's a comprehensive overview of **Backtracking Algorithms** in English, formatted with Markdown for easy reference:
-
-
 # **Backtracking Basics**
 Backtracking is a general algorithmic technique for **incrementally building candidates to solutions**, and **abandoning a candidate ("backtracking")** as soon as it determines that the candidate cannot possibly be completed to a valid solution.
 
