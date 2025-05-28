@@ -6,6 +6,7 @@
  *     Right *TreeNode
  * }
  */
+ // 迭代解法用栈
 func inorderTraversal(root *TreeNode) []int {
     var result []int
     var stack []*TreeNode
@@ -22,5 +23,23 @@ func inorderTraversal(root *TreeNode) []int {
         current = current.Right
     }
 
+    return result
+}
+
+// 递归
+func inorderTraversal2(root *TreeNode) []int {
+    var result []int
+    var inorder func(node *TreeNode)
+
+    inorder = func(node *TreeNode) {
+        if node == nil {
+            return
+        }
+        inorder(node.Left)
+        result = append(result, node.Val)
+        inorder(node.Right)
+    }
+
+    inorder(root)
     return result
 }
