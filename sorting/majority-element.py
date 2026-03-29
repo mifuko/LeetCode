@@ -1,4 +1,4 @@
-### 时间O(n) 空间O(n)
+### 时间O(n) 空间O(n) 词典
 # class Solution:
 #     def majorityElement(self, nums: List[int]) -> int:
 #         count = {}
@@ -21,7 +21,7 @@
 
 
 ### Boyer-Moore投票算法
-
+### 时间O(n) 空间O(1) 只用了两个变量 没有任何字典或者列表
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         candidate = None
@@ -37,6 +37,14 @@ class Solution:
         
         return candidate
 
-# count 代表当前候选人还剩多少人没被抵消
-# 一旦被抵消完（count=0），说明之前的候选人出局，换新的
+# candidate = 当前"活着"的那个数字
+# count = 它比其他数字多出来几个，还没被抵消的，不是出现次数，而是领先优势
 # 因为多数派人数超过一半，最后一定是多数派活到最后
+
+# The cancellation rule:
+# Same as candidate → they're on the same team, count + 1
+# Different from candidate → they cancel each other out, count - 1
+# Count hits 0 → the current candidate has been fully cancelled, pick a new one
+
+# Why the majority element always wins:
+# Because the majority element appears more than n/2 times, even if every single minority element cancels it out one by one, there will still be majority elements left standing at the end. The minority simply doesn't have enough people to fully cancel the majority.
