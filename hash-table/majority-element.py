@@ -22,20 +22,20 @@
 
 ### Boyer-Moore投票算法
 ### 时间O(n) 空间O(1) 只用了两个变量 没有任何字典或者列表
-class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
-        candidate = None
-        count = 0
+# class Solution:
+#     def majorityElement(self, nums: List[int]) -> int:
+#         candidate = None
+#         count = 0
         
-        for n in nums:
-            if count == 0:
-                candidate = n   # 重新选候选人
-            if n == candidate:
-                count += 1      # 同阵营，+1
-            else:
-                count -= 1      # 不同阵营，抵消
+#         for n in nums:
+#             if count == 0:
+#                 candidate = n   # 重新选候选人
+#             if n == candidate:
+#                 count += 1      # 同阵营，+1
+#             else:
+#                 count -= 1      # 不同阵营，抵消
         
-        return candidate
+#         return candidate
 
 # candidate = 当前"活着"的那个数字
 # count = 它比其他数字多出来几个，还没被抵消的，不是出现次数，而是领先优势
@@ -48,3 +48,17 @@ class Solution:
 
 # Why the majority element always wins:
 # Because the majority element appears more than n/2 times, even if every single minority element cancels it out one by one, there will still be majority elements left standing at the end. The minority simply doesn't have enough people to fully cancel the majority.
+
+
+### 多数派出现超过一半，把数组排序之后，中间那个位置的数一定是多数派。 时间复杂度是 O(n log n)
+### 虽然代码看起来只有一行，但 sort() 底层的 Timsort 排序过程中需要额外的临时空间来辅助排序，大概需要 n/2 的额外空间。
+# nums.sort()      # 从小到大排序
+# nums.reverse()   # 反转列表
+# nums.append(1)   # 末尾加一个元素
+# nums.pop()       # 删除末尾元素
+# len(nums)        # 列表长度
+
+class Solution:
+    def majorityElement(self, nums: List[int]) -> int:
+        nums.sort()
+        return nums[len(nums) // 2]
