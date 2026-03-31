@@ -1,7 +1,6 @@
 ### 贪心 每一步都做当前最优的选择，不回头，局部最优=全局最优
 # 每个位置能填'a'就填'a'
 # 因为'a'是最小的字母，字典序最小
-
 class Solution:
     def generateString(self, str1: str, str2: str) -> str:
         n, m = len(str1), len(str2)
