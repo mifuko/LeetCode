@@ -24,7 +24,7 @@ class Solution:
                     changed = False
                     for j in range(m):
                         if not fixed[i+j]:  # 找没被T占用的位置
-                            word[i+j] = 'b' if str2[j] == 'a' else 'a'
+                            s[j] = "b"  # 直接填'b'
                             changed = True
                             break
                     if not changed:
