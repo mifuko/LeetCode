@@ -4,34 +4,28 @@
 class Solution:
     def generateString(self, str1: str, str2: str) -> str:
         n, m = len(str1), len(str2)
-        word = ['a'] * (n + m - 1)
+        word = ["a"] * (n + m - 1)
         fixed = [False] * (n + m - 1)
-        
-        # 第一步：把T的位置填入str2，标记fixed
-        for i in range(n):
-            if str1[i] == 'T':
-                for j in range(m):
-                    if fixed[i+j] and word[i+j] != str2[j]:
-                        return ""  # T和T冲突
-                    word[i+j] = str2[j]
-                    fixed[i+j] = True
-        
-        # 第二步：检查F的位置
-        for i in range(n):
-            if str1[i] == 'F':
-                if word[i:i+m] == list(str2):
-                    # 完全一样，必须改一个字符
-                    changed = False
-                    for j in range(m):
-                        if not fixed[i+j]:  # 找没被T占用的位置
-                            word[j] = "b"  # 直接填'b'
-                            changed = True
-                            break
-                    if not changed:
-                        return ""  # 没有可以改的位置
-        
+
+        for i, ch in enumerate(str1):
+            if ch == "T":
+                for j, c in enumerate(str2, i):
+                    if fixed[j] and word[j] != c:
+                        return ""
+                    word[j], fixed[j] = c, True
+
+        for i, ch in enumerate(str1):
+            if ch == "F":
+                if any(str2[j - i] != word[j] for j in range(i, i + m)):
+                    continue
+                for j in range(i + m - 1, i - 1, -1):
+                    if not fixed[j]:
+                        word[j] = "b"
+                        break
+                else:
+                    return ""
+
         return "".join(word)
-            
 
 
 ### 动态规划 Use dynamic programming. 考虑所有可能，存储结果 局部最优≠全局最优
