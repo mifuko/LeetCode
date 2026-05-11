@@ -1,4 +1,9 @@
 class Solution:
-    def majorityElement(self, nums: List[int]) -> int:
-        nums.sort()
-        return nums[len(nums) // 2]
+    def separateDigits(self, nums):
+        result = []
+
+        for num in nums:
+            for digit in str(num):
+                result.append(int(digit))
+
+        return result
